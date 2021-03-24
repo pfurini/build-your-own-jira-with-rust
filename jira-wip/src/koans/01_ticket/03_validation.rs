@@ -7,7 +7,7 @@ enum Status {
 
 struct Ticket {
     title: String,
-    description: String,
+    pub description: String,
     status: Status,
 }
 
@@ -24,8 +24,21 @@ struct Ticket {
 /// We will learn a better way to handle recoverable errors such as this one further along,
 /// but let's rely on panic for the time being.
 fn create_ticket(title: String, description: String, status: Status) -> Ticket {
-                                                                             todo!()
-                                                                                    }
+    if title == "" {
+        panic!("no empty title");
+    }
+    if title.chars().count() > 50 {
+        panic!("title must be 50 or less");
+    }
+    if description.chars().count() > 3000 {
+        panic!("description must be 3000 or less");
+    }
+    Ticket {
+        title,
+        description,
+        status
+    }
+}
 
 #[cfg(test)]
 mod tests {
